@@ -1,0 +1,24 @@
+public function send_mail(){
+	 $this->load->library('email');
+	$name = $this->input->post('name');
+	$email = $this->input->post('email');
+	$subject = $this->input->post('subject');
+	$message = $this->input->post('message');
+	$from_email = $email;
+	$recipient = "info@siddhisales.in";
+$subject = $subject;
+$headers  = 'MIME-Version: 1.0' . "\r\n";
+$headers .= 'Content-type: text/html; charset=iso-8859-1' . "\r\n";
+$headers .= 'From: '.$from_email."\r\n".
+'Reply-To: '.$from_email."\r\n" .
+'X-Mailer: PHP/' . phpversion();
+
+$send = mail($recipient, $subject, $message, $headers);
+if($send){
+	$this->session->set_flashdata('send_email','success');
+}
+else{
+	$this->session->set_flashdata('send_email','error');
+}
+header('Location:'.base_url());
+}
